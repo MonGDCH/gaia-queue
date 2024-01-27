@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace process\queue;
 
 use mon\env\Config;
+use mon\log\Logger;
 use Workerman\Worker;
 use gaia\ProcessTrait;
 use mon\util\Container;
@@ -41,6 +42,13 @@ class Queue implements ProcessInterface
     protected $namespance = '';
 
     /**
+     * 日志通道
+     *
+     * @var string
+     */
+    protected $log_channel = 'queue';
+
+    /**
      * 是否启用进程
      *
      * @return boolean
@@ -65,9 +73,14 @@ class Queue implements ProcessInterface
      */
     public function __construct()
     {
+        // 消费者回调控制器目录
         $detault = APP_PATH . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR;;
         $this->consumers_path = Config::instance()->get('queue.app.consumers_path', $detault);
+        // 消费者回调控制器命名空间
         $this->namespance = Config::instance()->get('queue.app.namespace', '');
+        // 注册日志服务
+        $this->log_channel = Config::instance()->get('queue.app.log.channel', 'queue');
+        Logger::instance()->createChannel($this->log_channel, Config::instance()->get('queue.app.log.config', []));
     }
 
     /**
@@ -92,10 +105,11 @@ class Queue implements ProcessInterface
         foreach ($iterator as $file) {
             if ($file->getExtension() === 'php') {
                 $name = $file->getBasename('.php');
-                $className = $this->namespance . $name;
+                $className = $this->namespance . '\\' . $name;
                 if (!is_subclass_of($className, ConsumerInterface::class)) {
                     continue;
                 }
+                dd(1);
                 /** @var ConsumerInterface $consumer */
                 $consumer = Container::instance()->get($className);
                 $queue = $consumer->queue();
@@ -105,6 +119,7 @@ class Queue implements ProcessInterface
                 $queueList[] = $queue;
                 $queueClient = QueueService::connection($consumer->connection());
                 $queueClient->subscribe($queue, [$consumer, 'consume']);
+                Logger::instance()->channel($this->log_channel)->info('init queue subscribe => ' . $queue);
             }
         }
     }
