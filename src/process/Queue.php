@@ -109,7 +109,6 @@ class Queue implements ProcessInterface
                 if (!is_subclass_of($className, ConsumerInterface::class)) {
                     continue;
                 }
-                dd(1);
                 /** @var ConsumerInterface $consumer */
                 $consumer = Container::instance()->get($className);
                 $queue = $consumer->queue();
