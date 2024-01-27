@@ -1,0 +1,29 @@
+{
+    "name": "mongdch/gaia-queue",
+    "description": "The Gaia Framework queue process.",
+    "license": "MIT",
+    "homepage": "http://gdmon.com/",
+    "keywords": [
+        "gaia",
+        "workerman",
+        "queue"
+    ],
+    "authors": [
+        {
+            "name": "Mon",
+            "email": "985558837@qq.com",
+            "homepage": "http://www.gdmon.com/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.0",
+        "workerman/redis-queue": "^1.1",
+        "mongdch/mon-util": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "gaia\\queue\\": "src/"
+        }
+    }
+}
