@@ -14,7 +14,7 @@ return [
     // 配置信息
     'connections'   => [
         'default'   => [
-            // 链接scheme
+            // 链接scheme，只支持redis
             'scheme'        => 'redis',
             // 链接host
             'host'          => env('QUEUE_HOST', env('REDIS_HOST', '127.0.0.1')),

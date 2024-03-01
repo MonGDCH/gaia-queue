@@ -108,7 +108,7 @@ class HttpQueue implements ConsumerInterface
      * @param integer $delay    队列延迟执行事件
      * @return bool 是否发送成功
      */
-    public function sendQuery(string $url, string $method = 'GET', array $data = [], array $header = [], string $agent = '', int $timeout = 10, bool $saveRet = false, int $delay = 0)
+    public function sendQuery(string $url, string $method = 'GET', array $data = [], array $header = [], string $agent = '', int $timeout = 10, bool $saveRet = false, int $delay = 0): bool
     {
         // 发送消息队列数据
         $queueData = [

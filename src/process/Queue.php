@@ -12,6 +12,7 @@ use mon\util\Container;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use support\queue\QueueService;
+use gaia\queue\ConsumerInterface;
 use gaia\interfaces\ProcessInterface;
 use Workerman\Connection\TcpConnection;
 
@@ -54,7 +55,7 @@ class Queue implements ProcessInterface
      */
     public static function enable(): bool
     {
-        return Config::instance()->get('queue.process.enable', false);
+        return Config::instance()->get('queue.app.enable', false);
     }
 
     /**
@@ -64,7 +65,7 @@ class Queue implements ProcessInterface
      */
     public static function getProcessConfig(): array
     {
-        return Config::instance()->get('queue.process.config', []);
+        return Config::instance()->get('queue.app.process', []);
     }
 
     /**

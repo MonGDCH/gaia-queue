@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace support\queue;
 
-use Redis;
 use mon\env\Config;
 use mon\util\Network;
 use RuntimeException;
@@ -59,39 +58,25 @@ class QueueService
     /**
      * 与消息队列进程通信
      *
-     * @param string $messgae
+     * @param string $messgae   通信信息
      * @return string
      */
     public static function communication(string $messgae = 'ping'): string
     {
         $host = Queue::getListenHost();
         $port = Queue::getListenPort();
-        $result = Network::instance()->sendTCP($host, $port, $messgae . "\n");
-        return trim($result['result']);
-    }
-
-    /**
-     * 获取消息队列Reddis实例
-     *
-     * @param string $connection
-     * @param integer $ping
-     * @return Redis
-     */
-    public static function queueRedis(string $connection = '', int $ping = 55): Redis
-    {
-        // redis配置
-        $config = static::getQueueConfig($connection, $ping);
-        return RedisService::instance()->getRedis($config);
+        $result = Network::instance()->sendTCP($host, $port, $messgae . "\n", false);
+        return trim((string)$result['result']);
     }
 
     /**
      * 同步向队列发送一条消息
      *
-     * @param string $queue  队列名
-     * @param array $data   发布的具体消息，可以是数组或者字符串
-     * @param integer $delay    延迟消费时间，单位秒，默认0
+     * @param string $queue         队列名
+     * @param array $data           发布的具体消息，可以是数组或者字符串
+     * @param integer $delay        延迟消费时间，单位秒，默认0
      * @param string $connection    连接的队列，默认空
-     * @param integer $ping    RedisService 连接保活时间，一般不做修改即可
+     * @param integer $ping         RedisService 连接保活时间，一般不做修改即可
      * @return boolean
      */
     public static function syncSend(string $queue, array $data, int $delay = 0, string $connection = '', int $ping = 55): bool
@@ -121,9 +106,9 @@ class QueueService
     /**
      * 异步向队列发送一条消息，需要 workerman 环境
      *
-     * @param string $queue  队列名
-     * @param array $data   发布的具体消息，可以是数组或者字符串
-     * @param integer $delay    延迟消费时间，单位秒，默认0
+     * @param string $queue         队列名
+     * @param array $data           发布的具体消息，可以是数组或者字符串
+     * @param integer $delay        延迟消费时间，单位秒，默认0
      * @param string $connection    连接的队列，默认空
      * @return void
      */
@@ -136,10 +121,10 @@ class QueueService
      * 获取消息队列配置信息
      *
      * @param string $connection    连接的队列，默认空
-     * @param integer $ping    RedisService 连接保活时间，一般不做修改即可
+     * @param integer $ping         RedisService 连接保活时间，一般不做修改即可
      * @return array
      */
-    protected static function getQueueConfig(string $connection = '', int $ping = 55): array
+    public static function getQueueConfig(string $connection = '', int $ping = 55): array
     {
         // redis配置
         $name = $connection ?: Config::instance()->get('queue.queue.default', 'default');

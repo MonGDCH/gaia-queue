@@ -45,8 +45,7 @@ class Install
      */
     public static function install()
     {
-
-        echo static::colorEcho('[success]Gaia-queue installation successful, please execute `php gaia vendor:publish gaia\queue`') . PHP_EOL;
+        echo 'Gaia-queue installation successful, please execute `php gaia vendor:publish gaia\queue`' . PHP_EOL;
     }
 
     /**
@@ -56,7 +55,7 @@ class Install
      */
     public static function update()
     {
-        echo static::colorEcho('[success]Gaia-queue upgrade successful, please execute `php gaia vendor:publish gaia\queue`') . PHP_EOL;
+        echo 'Gaia-queue upgrade successful, please execute `php gaia vendor:publish gaia\queue`' . PHP_EOL;
     }
 
     /**
@@ -87,17 +86,5 @@ class Install
             $sourceDir = $source_path . $source;
             Plugin::copydir($sourceDir, $dest, true);
         }
-    }
-
-    /**
-     * 染色内容
-     *
-     * @param string $string
-     * @return string
-     */
-    protected static function colorEcho(string $string): string
-    {
-
-        return '\033[92m' . $string . '\033[0m';
     }
 }
