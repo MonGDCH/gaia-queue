@@ -45,6 +45,7 @@ class Install
      */
     public static function install()
     {
+        echo 'Gaia-queue installation successful, please execute `php gaia vendor:publish gaia\queue`' . PHP_EOL;
     }
 
     /**
@@ -54,7 +55,7 @@ class Install
      */
     public static function update()
     {
-        echo 'Gaia-queue installation successful, please execute `php gaia vendor:publish gaia\queue`' . PHP_EOL;
+        echo 'Gaia-queue upgrade successful, please execute `php gaia vendor:publish gaia\queue`' . PHP_EOL;
     }
 
     /**
