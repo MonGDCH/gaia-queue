@@ -5,4 +5,6 @@
 ### 安装
 
 ```bash
-composer require mongdch/gaia-queue```
+composer require mongdch/gaia-queue
+
+```

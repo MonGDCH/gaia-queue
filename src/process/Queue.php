@@ -9,12 +9,11 @@ use mon\log\Logger;
 use Workerman\Worker;
 use gaia\ProcessTrait;
 use mon\util\Container;
-use gaia\queue\QueueService;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
+use support\queue\QueueService;
 use gaia\interfaces\ProcessInterface;
 use Workerman\Connection\TcpConnection;
-use gaia\queue\contract\ConsumerInterface;
 
 /**
  * 消息队列消费进程

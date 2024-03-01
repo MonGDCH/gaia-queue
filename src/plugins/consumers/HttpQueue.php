@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace app\queue\consumers;
+namespace plugins\queue\consumers;
 
 use Throwable;
 use mon\env\Config;
 use mon\log\Logger;
 use mon\util\Network;
 use mon\util\Instance;
-use gaia\queue\QueueService;
-use gaia\queue\contract\ConsumerInterface;
+use support\queue\QueueService;
+use gaia\queue\ConsumerInterface;
 
 /**
  * 发送HTTP请求消息队列消费者服务

@@ -11,9 +11,9 @@
 
 return [
     // 消费者进程存放目录路径
-    'consumers_path' => APP_PATH . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR,
+    'consumers_path' => PLUGIN_PATH . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR,
     // 命名空间
-    'namespace' => '\\app\queue\consumers',
+    'namespace' => '\\plugins\queue\consumers',
     // 日志配置
     'log'   => [
         // 日志通道名

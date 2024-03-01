@@ -34,7 +34,8 @@ class Install
     protected static $dir_relation = [
         'config'    => 'config/queue',
         'process'   => 'process/queue',
-        'consumers' => 'app/queue/consumers'
+        'plugins'   => 'plugins/queue',
+        'support'   => 'support/queue'
     ];
 
     /**
@@ -53,6 +54,7 @@ class Install
      */
     public static function update()
     {
+        echo 'Gaia-queue installation successful, please execute `php gaia vendor:publish gaia\queue`' . PHP_EOL;
     }
 
     /**

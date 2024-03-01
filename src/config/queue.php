@@ -17,13 +17,13 @@ return [
             // 链接scheme
             'scheme'        => 'redis',
             // 链接host
-            'host'          => env('QUEUE_HOST', '127.0.0.1'),
+            'host'          => env('QUEUE_HOST', env('REDIS_HOST', '127.0.0.1')),
             // 链接端口
-            'port'          => env('QUEUE_PORT', 6379),
+            'port'          => env('QUEUE_PORT', env('REDIS_PORT', 6379)),
             // 链接密码
-            'auth'          => env('QUEUE_AUTH', ''),
+            'auth'          => env('QUEUE_AUTH', env('REDIS_AUTH', '')),
             // 自定义键前缀
-            'prefix'        => env('QUEUE_PREFIX', ''),
+            'prefix'        => env('QUEUE_PREFIX', env('REDIS_PREFIX', '')),
             // redis数据库
             'database'      => env('QUEUE_DB', 5),
             // 消费失败后，重试次数

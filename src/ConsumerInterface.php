@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace gaia\queue\contract;
+namespace gaia\queue;
 
 /**
  * 队列消费回调接口
