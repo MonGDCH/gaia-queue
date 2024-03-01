@@ -11,11 +11,11 @@
 
 return [
     // 是否启用消息队列
-    'enable'    => false,
+    'enable'            => false,
     // 消费者进程存放目录路径
-    'consumers_path' => PLUGIN_PATH . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR,
+    'consumers_path'    => PLUGIN_PATH . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR,
     // 命名空间
-    'namespace' => '\\plugins\queue\consumers',
+    'namespace'         => '\\plugins\queue\consumers',
     // 消息队列进程 Queue 配置
     'process'           => [
         // 监听协议端口，采用text协议，方便通信
@@ -36,13 +36,13 @@ return [
         'reloadable'    => true,
     ],
     // 日志配置
-    'log'   => [
+    'log'           => [
         // 日志通道名
-        'channel' => 'queue',
+        'channel'   => 'queue',
         // 日志配置
         'config'    => [
             // 解析器
-            'format'    => [
+            'format'        => [
                 // 类名
                 'handler'   => \mon\log\format\LineFormat::class,
                 // 配置信息
@@ -60,7 +60,7 @@ return [
                 ]
             ],
             // 记录器
-            'record'    => [
+            'record'        => [
                 // 类名
                 'handler'   => \mon\log\record\FileRecord::class,
                 // 配置信息
