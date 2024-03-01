@@ -95,7 +95,7 @@ class Install
      * @param string $string
      * @return string
      */
-    protected function colorEcho(string $string): string
+    protected static function colorEcho(string $string): string
     {
 
         return '\033[92m' . $string . '\033[0m';
