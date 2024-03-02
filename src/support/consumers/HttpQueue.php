@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace plugins\queue\consumers;
+namespace support\queue\consumers;
 
 use Throwable;
 use mon\env\Config;

@@ -13,9 +13,9 @@ return [
     // 是否启用消息队列
     'enable'            => false,
     // 消费者进程存放目录路径
-    'consumers_path'    => PLUGIN_PATH . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR,
+    'consumers_path'    => ROOT_PATH . DIRECTORY_SEPARATOR . 'support' . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR,
     // 命名空间
-    'namespace'         => '\\plugins\queue\consumers',
+    'namespace'         => '\\support\queue\consumers',
     // 消息队列进程 Queue 配置
     'process'           => [
         // 监听协议端口，采用text协议，方便通信

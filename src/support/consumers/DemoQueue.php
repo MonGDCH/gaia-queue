@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace plugins\queue\consumers;
+namespace support\queue\consumers;
 
 use mon\util\Instance;
 use support\queue\QueueService;
