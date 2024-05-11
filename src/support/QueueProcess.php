@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace process\queue;
+namespace support\queue;
 
 use mon\env\Config;
 use mon\log\Logger;
@@ -23,7 +23,7 @@ use Workerman\Connection\TcpConnection;
  * @copyright Gaia
  * @version 1.0.0 2023-11-23
  */
-class Queue implements ProcessInterface
+class QueueProcess implements ProcessInterface
 {
     use ProcessTrait;
 
