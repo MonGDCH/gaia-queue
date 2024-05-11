@@ -24,7 +24,9 @@ class Install
      *
      * @var array
      */
-    protected static $file_relation = [];
+    protected static $file_relation = [
+        'install/queue.php' => 'bin/queue',
+    ];
 
     /**
      * 移动的文件夹
