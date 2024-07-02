@@ -19,7 +19,7 @@ return [
         // 额外参数
         'context'       => [],
         // 进程数
-        'count'         => \gaia\App::cpuCount() * 2,
+        'count'         => \gaia\App::cpuCount(),
         // 通信协议，一般不需要修改
         'transport'     => 'tcp',
         // 进程用户
