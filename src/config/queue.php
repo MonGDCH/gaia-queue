@@ -7,7 +7,6 @@
 | 定义消息队列Redis配置信息
 |
 */
-
 return [
     // 链接的配置
     'default'   => 'default',

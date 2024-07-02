@@ -7,8 +7,6 @@
 | 定义消息队列配置信息
 |
 */
-
-
 return [
     // 消费者进程存放目录路径
     'consumers_path'    => ROOT_PATH . DIRECTORY_SEPARATOR . 'support' . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR,

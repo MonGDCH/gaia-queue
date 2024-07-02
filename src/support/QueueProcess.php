@@ -6,12 +6,14 @@ namespace support\queue;
 
 use mon\env\Config;
 use mon\log\Logger;
+use mon\thinkORM\ORM;
 use Workerman\Worker;
 use gaia\ProcessTrait;
 use mon\util\Container;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use support\queue\QueueService;
+use support\cache\CacheService;
 use gaia\queue\ConsumerInterface;
 use gaia\interfaces\ProcessInterface;
 use Workerman\Connection\TcpConnection;
@@ -85,6 +87,17 @@ class QueueProcess implements ProcessInterface
         if (!is_dir($this->consumers_path)) {
             echo "[warn] Consumer directory {$this->consumers_path} not exists" . PHP_EOL;
             return;
+        }
+
+        // 定义数据库配置，自动识别是否已安装Orm库
+        if (class_exists(ORM::class)) {
+            $config = Config::instance()->get('database', []);
+            // 识别是否存在缓存库
+            if (class_exists(CacheService::class)) {
+                ORM::register(true, $config, Logger::instance()->channel($this->log_channel), CacheService::instance()->getService()->store());
+            } else {
+                ORM::register(true, $config, Logger::instance()->channel($this->log_channel));
+            }
         }
 
         // 迭代获取所有消费回调
