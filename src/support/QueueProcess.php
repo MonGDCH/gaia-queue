@@ -49,16 +49,6 @@ class QueueProcess implements ProcessInterface
     protected $log_channel = 'queue';
 
     /**
-     * 是否启用进程
-     *
-     * @return boolean
-     */
-    public static function enable(): bool
-    {
-        return Config::instance()->get('queue.app.enable', false);
-    }
-
-    /**
      * 获取进程配置
      *
      * @return array
@@ -104,19 +94,27 @@ class QueueProcess implements ProcessInterface
         /** @var RecursiveDirectoryIterator $iterator */
         foreach ($iterator as $file) {
             if ($file->getExtension() === 'php') {
-                $name = $file->getBasename('.php');
-                $className = $this->namespance . '\\' . $name;
+                // 获取对象名称
+                $dirname = dirname(str_replace($this->consumers_path, '', $file->getPathname()));
+                $beforName = str_replace(DIRECTORY_SEPARATOR, '\\', $dirname);
+                $beforNamespace = ($beforName == '\\' || $beforName == '.') ? '' : ('\\' . $beforName);
+                $className = $this->namespance . $beforNamespace . '\\' . $file->getBasename('.php');
                 if (!is_subclass_of($className, ConsumerInterface::class)) {
                     continue;
                 }
                 /** @var ConsumerInterface $consumer */
                 $consumer = Container::instance()->get($className);
+                $connection = $consumer->connection();
                 $queue = $consumer->queue();
-                if (in_array($queue, $queueList)) {
+                if (!isset($queueList[$connection])) {
+                    $queueList[$connection] = [];
+                }
+                // 检查队列是否重复，一个连接下不能订阅相同的队列
+                if (in_array($queue, $queueList[$connection])) {
                     throw new \RuntimeException("queue {$queue} is duplicated");
                 }
-                $queueList[] = $queue;
-                $queueClient = QueueService::connection($consumer->connection());
+                $queueList[$connection][] = $queue;
+                $queueClient = QueueService::connection($connection);
                 $queueClient->subscribe($queue, [$consumer, 'consume']);
                 Logger::instance()->channel($this->log_channel)->info('init queue subscribe => ' . $queue);
             }

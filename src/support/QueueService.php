@@ -7,7 +7,6 @@ namespace support\queue;
 use mon\env\Config;
 use mon\util\Network;
 use RuntimeException;
-use process\queue\Queue;
 use Workerman\RedisQueue\Client;
 use support\service\RedisService;
 
@@ -63,8 +62,8 @@ class QueueService
      */
     public static function communication(string $messgae = 'ping'): string
     {
-        $host = Queue::getListenHost();
-        $port = Queue::getListenPort();
+        $host = QueueProcess::getListenHost();
+        $port = QueueProcess::getListenPort();
         $result = Network::instance()->sendTCP($host, $port, $messgae . "\n", false);
         return trim((string)$result['result']);
     }

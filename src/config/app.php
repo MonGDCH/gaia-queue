@@ -10,8 +10,6 @@
 
 
 return [
-    // 是否启用消息队列
-    'enable'            => false,
     // 消费者进程存放目录路径
     'consumers_path'    => ROOT_PATH . DIRECTORY_SEPARATOR . 'support' . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR,
     // 命名空间

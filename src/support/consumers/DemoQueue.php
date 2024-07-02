@@ -25,7 +25,7 @@ class DemoQueue implements ConsumerInterface
      */
     public function connection(): string
     {
-        return '';
+        return 'default';
     }
 
     /**

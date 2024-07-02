@@ -29,7 +29,7 @@ class HttpQueue implements ConsumerInterface
      */
     public function connection(): string
     {
-        return '';
+        return 'default';
     }
 
     /**
