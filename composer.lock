@@ -8,16 +8,11 @@
     "packages": [
         {
             "name": "mongdch/mon-util",
-            "version": "1.5.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MonGDCH/mon-util.git",
-                "reference": "a4f89d00e66f62eab7a4cf40e90e2d2acdbdcab9"
-            },
+            "version": "1.5.10",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MonGDCH/mon-util/zipball/a4f89d00e66f62eab7a4cf40e90e2d2acdbdcab9",
-                "reference": "a4f89d00e66f62eab7a4cf40e90e2d2acdbdcab9",
+                "url": "https://mirrors.tencent.com/repository/composer/mongdch/mon-util/1.5.10/mongdch-mon-util-1.5.10.zip",
+                "reference": "3e5ee40172544229c0d596ee39f9148198c097e8",
                 "shasum": ""
             },
             "require": {
@@ -33,7 +28,6 @@
                     "mon\\util\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -52,23 +46,14 @@
                 "tool",
                 "util"
             ],
-            "support": {
-                "issues": "https://github.com/MonGDCH/mon-util/issues",
-                "source": "https://github.com/MonGDCH/mon-util/tree/1.5.5"
-            },
-            "time": "2024-04-15T05:45:46+00:00"
+            "time": "2024-12-11T06:39:28+00:00"
         },
         {
             "name": "psr/container",
             "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/container.git",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
-            },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "url": "https://mirrors.tencent.com/repository/composer/psr/container/1.0.0/psr-container-1.0.0.zip",
                 "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
                 "shasum": ""
             },
@@ -86,7 +71,6 @@
                     "Psr\\Container\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -105,24 +89,15 @@
                 "container-interop",
                 "psr"
             ],
-            "support": {
-                "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/master"
-            },
             "time": "2017-02-14T16:28:37+00:00"
         },
         {
             "name": "workerman/redis",
-            "version": "v2.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/walkor/redis.git",
-                "reference": "542f10c243ba846f1f3b4c07a26136c5fa80d972"
-            },
+            "version": "v2.0.3",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/redis/zipball/542f10c243ba846f1f3b4c07a26136c5fa80d972",
-                "reference": "542f10c243ba846f1f3b4c07a26136c5fa80d972",
+                "url": "https://mirrors.tencent.com/repository/composer/workerman/redis/v2.0.3/workerman-redis-v2.0.3.zip",
+                "reference": "4e910d4b0c2f2101a1f8dbd28be79fd864f7aab8",
                 "shasum": ""
             },
             "require": {
@@ -135,28 +110,18 @@
                     "Workerman\\Redis\\": "./src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "homepage": "http://www.workerman.net",
-            "support": {
-                "issues": "https://github.com/walkor/redis/issues",
-                "source": "https://github.com/walkor/redis/tree/v2.0.2"
-            },
-            "time": "2023-06-08T01:39:47+00:00"
+            "time": "2024-08-01T03:38:26+00:00"
         },
         {
             "name": "workerman/redis-queue",
             "version": "v1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/walkor/redis-queue.git",
-                "reference": "7b6aee70d69e5c9427c0411d85f8398027831b42"
-            },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/redis-queue/zipball/7b6aee70d69e5c9427c0411d85f8398027831b42",
+                "url": "https://mirrors.tencent.com/repository/composer/workerman/redis-queue/v1.2.0/workerman-redis-queue-v1.2.0.zip",
                 "reference": "7b6aee70d69e5c9427c0411d85f8398027831b42",
                 "shasum": ""
             },
@@ -171,30 +136,20 @@
                     "Workerman\\RedisQueue\\": "./src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Message queue system written in PHP based on workerman and backed by Redis.",
             "homepage": "http://www.workerman.net",
-            "support": {
-                "issues": "https://github.com/walkor/redis-queue/issues",
-                "source": "https://github.com/walkor/redis-queue/tree/v1.2.0"
-            },
             "time": "2024-02-28T07:00:03+00:00"
         },
         {
             "name": "workerman/workerman",
-            "version": "v4.1.15",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/walkor/workerman.git",
-                "reference": "afc8242fc769ab7cf22eb4ac22b97cb59d465e4e"
-            },
+            "version": "v4.1.17",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/workerman/zipball/afc8242fc769ab7cf22eb4ac22b97cb59d465e4e",
-                "reference": "afc8242fc769ab7cf22eb4ac22b97cb59d465e4e",
+                "url": "https://mirrors.tencent.com/repository/composer/workerman/workerman/v4.1.17/workerman-workerman-v4.1.17.zip",
+                "reference": "bb9e4b0c3fc3931a2ae38a1fb7a3ac09246efae9",
                 "shasum": ""
             },
             "require": {
@@ -209,7 +164,6 @@
                     "Workerman\\": "./"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -227,24 +181,7 @@
                 "asynchronous",
                 "event-loop"
             ],
-            "support": {
-                "email": "walkor@workerman.net",
-                "forum": "http://wenda.workerman.net/",
-                "issues": "https://github.com/walkor/workerman/issues",
-                "source": "https://github.com/walkor/workerman",
-                "wiki": "http://doc.workerman.net/"
-            },
-            "funding": [
-                {
-                    "url": "https://opencollective.com/workerman",
-                    "type": "open_collective"
-                },
-                {
-                    "url": "https://www.patreon.com/walkor",
-                    "type": "patreon"
-                }
-            ],
-            "time": "2024-02-19T02:10:39+00:00"
+            "time": "2024-11-07T07:48:34+00:00"
         }
     ],
     "packages-dev": [],

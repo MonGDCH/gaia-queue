@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace support\queue\consumers;
 
+use Throwable;
 use mon\util\Instance;
 use support\queue\QueueService;
 use gaia\queue\ConsumerInterface;
@@ -59,5 +60,19 @@ class DemoQueue implements ConsumerInterface
     public function sendQuery(array $data = [], int $delay = 0): bool
     {
         return QueueService::syncSend($this->queue(), $data, $delay, $this->connection());
+    }
+
+    /**
+     * 消费失败触发的回调(可选)，支持更改内部数据结构$package的值，只需要将更改后的$data return 即可。
+     *
+     * @param Throwable $e  错误实例
+     * @param mixed $data   消息参数
+     * @return mixed
+     */
+    public function onConsumeFailure(Throwable $e, $data)
+    {
+        echo "队列 " . $data['queue'] . " 消费失败\n";
+        echo $e->getMessage(), "\n";
+        dd($data);
     }
 }

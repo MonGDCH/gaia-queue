@@ -128,7 +128,14 @@ class QueueProcess implements ProcessInterface
                 }
                 $queueList[$connection][] = $queue;
                 $queueClient = QueueService::connection($connection);
+                // 监听队列
                 $queueClient->subscribe($queue, [$consumer, 'consume']);
+                // 消费失败时回调
+                if (method_exists($consumer, 'onConsumeFailure')) {
+                    $queueClient->onConsumeFailure(function ($exeption, $package) use ($consumer) {
+                        return call_user_func([$consumer, 'onConsumeFailure'], $exeption, $package);
+                    });
+                }
                 Logger::instance()->channel($this->log_channel)->info('init queue subscribe => ' . $queue);
             }
         }

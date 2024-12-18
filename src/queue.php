@@ -59,11 +59,11 @@ class Queue
     public function run()
     {
         if (empty($this->process)) {
-            echo '未定义启动进程';
+            echo '未定义启动进程' . PHP_EOL;
             return;
         }
         if (empty($this->name)) {
-            echo '未定义应用名称';
+            echo '未定义应用名称' . PHP_EOL;
             return;
         }
 
