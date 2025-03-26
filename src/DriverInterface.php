@@ -15,12 +15,10 @@ interface DriverInterface
     /**
      * 处理回调方法
      *
-     * @param string $connection    连接标识
-     * @param string $queue         队列标识
+     * @param array $package        消费数据包
      * @param boolean $status       消费状态，true成功，false失败
      * @param string $result        消费结果
-     * @param array $package        消费数据包
      * @return void
      */
-    public function handeler(string $connection, string $queue, bool $status, string $result, array $package);
+    public function handeler(array $package, bool $status, string $result = '');
 }

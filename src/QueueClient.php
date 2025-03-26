@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace gaia\queue;
 
 use Throwable;
+use mon\log\Logger;
 use Workerman\Timer;
 use Workerman\RedisQueue\Client;
 use Workerman\RedisQueue\UnretryableException;
@@ -118,19 +119,60 @@ class QueueClient extends Client
     }
 
     /**
+     * 重构send方法
+     *
+     * @param string $queue     队列名称
+     * @param array $data       发布的具体消息，可以是数组或者字符串
+     * @param integer $delay    延迟消费时间，单位秒，默认0
+     * @param string $connect   连接的队列，默认空
+     * @param mixed $cb         对调方法，默认空
+     * @return void
+     */
+    public function send($queue, $data, $delay = 0, $connect = '', $cb = null)
+    {
+        static $_id = 0;
+        $id = \microtime(true) . '.' . (++$_id);
+        $now = time();
+        $package_str = \json_encode([
+            'id'        => $id,
+            'time'      => $now,
+            'delay'     => $delay,
+            'attempts'  => 0,
+            'connect'   => $connect,
+            'queue'     => $queue,
+            'data'      => $data
+        ], JSON_UNESCAPED_UNICODE);
+        if (\is_callable($delay)) {
+            $cb = $delay;
+            $delay = 0;
+        }
+        if ($cb) {
+            $cb = function ($ret) use ($cb) {
+                $cb((bool)$ret);
+            };
+            if ($delay == 0) {
+                $this->_redisSend->lPush($this->_options['prefix'] . static::QUEUE_WAITING . $queue, $package_str, $cb);
+            } else {
+                $this->_redisSend->zAdd($this->_options['prefix'] . static::QUEUE_DELAYED, $now + $delay, $package_str, $cb);
+            }
+            return;
+        }
+        if ($delay == 0) {
+            $this->_redisSend->lPush($this->_options['prefix'] . static::QUEUE_WAITING . $queue, $package_str);
+        } else {
+            $this->_redisSend->zAdd($this->_options['prefix'] . static::QUEUE_DELAYED, $now + $delay, $package_str);
+        }
+    }
+
+    /**
      * 重载日志方法
      *
      * @param string $log   日志内容
      * @param string $level 日志等级
      * @return void
      */
-    protected function log($log, string $level = 'info'): void
+    protected function log($log, string $level = 'error'): void
     {
-        if ($this->_log) {
-            \call_user_func([$this->_log, $level], $log);
-            return;
-        }
-
-        echo $log . PHP_EOL;
+        \call_user_func([Logger::instance()->channel(), $level], $log);
     }
 }

@@ -28,21 +28,25 @@ class Mysql implements DriverInterface
      * @param array $package        消费数据包
      * @return void
      */
-    public function handeler(string $connection, string $queue, bool $status, string $result, array $package)
+    public function handeler(array $package, bool $status, string $result = '')
     {
         // 运行时间
         $nowMsec = microtime(true);
         $running_time = 0;
         if (isset($package['consume_msec'])) {
-            $running_time = $nowMsec - $package['consume_msec'];
+            $running_time = round($nowMsec - $package['consume_msec'], 6);
         }
         $run_time = $package['consume_time'] ?? date('Y-m-d H:i:s', time());
         // 消费结果
         $status = $status ? 1 : 0;
+        // 投递时间
+        $send_time = date('Y-m-d H:i:s', $package['time']);
+        // 记录日志
         $save = Db::table($this->getTable())->insert([
-            'connection'    => $connection,
-            'queue'         => $queue,
-            'send_time'     => $package['time'],
+            'connection'    => $package['connect'],
+            'queue'         => $package['queue'],
+            'send_time'     => $send_time,
+            'send_data'     => is_array($package['data']) ? json_encode($package['data'], JSON_UNESCAPED_UNICODE) : $package['data'],
             'run_time'      => $run_time,
             'running_time'  => $running_time,
             'status'        => $status,

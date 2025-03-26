@@ -7,13 +7,10 @@ namespace support\queue\process;
 use Exception;
 use mon\env\Config;
 use mon\log\Logger;
-use RuntimeException;
 use mon\thinkORM\ORM;
 use Workerman\Worker;
 use gaia\ProcessTrait;
 use mon\util\Container;
-use RecursiveIteratorIterator;
-use RecursiveDirectoryIterator;
 use support\queue\QueueService;
 use support\cache\CacheService;
 use gaia\queue\DriverInterface;
@@ -31,27 +28,6 @@ use Workerman\Connection\TcpConnection;
 class Queue implements ProcessInterface
 {
     use ProcessTrait;
-
-    /**
-     * 消费者路径
-     *
-     * @var string
-     */
-    protected $consumers_path = '';
-
-    /**
-     * 消费者对象命名空间
-     *
-     * @var string
-     */
-    protected $namespance = '';
-
-    /**
-     * 日志通道
-     *
-     * @var string
-     */
-    protected $log_channel = 'queue';
 
     /**
      * 队列任务池
@@ -78,22 +54,6 @@ class Queue implements ProcessInterface
     }
 
     /**
-     * 构造方法
-     */
-    public function __construct()
-    {
-        // 消费者回调控制器目录
-        $detault = SUPPORT_PATH . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR;
-        $this->consumers_path = Config::instance()->get('queue.app.consumers_path', $detault);
-        // 消费者回调控制器命名空间
-        $this->namespance = Config::instance()->get('queue.app.namespace', '\\support\queue\consumers');
-        // 注册日志服务
-        $this->log_channel = Config::instance()->get('queue.app.log.channel', 'queue');
-        Logger::instance()->createChannel($this->log_channel, Config::instance()->get('queue.app.log.config', []));
-        Logger::instance()->setDefaultChannel($this->log_channel);
-    }
-
-    /**
      * 进程启动
      *
      * @param Worker $worker worker进程
@@ -101,11 +61,10 @@ class Queue implements ProcessInterface
      */
     public function onWorkerStart(Worker $worker): void
     {
-        // 进程启动初始化业务
-        if (!is_dir($this->consumers_path)) {
-            echo "[warn] Consumer directory {$this->consumers_path} not exists" . PHP_EOL;
-            return;
-        }
+        // 注册日志服务
+        $channel = Config::instance()->get('queue.app.log.channel', 'queue');
+        Logger::instance()->createChannel($channel, Config::instance()->get('queue.app.log.config', []));
+        Logger::instance()->setDefaultChannel($channel);
 
         // 定义数据库配置，自动识别是否已安装ORM库
         if (class_exists(ORM::class)) {
@@ -117,94 +76,79 @@ class Queue implements ProcessInterface
 
         // 回调处理器驱动
         $handlerDriver = Config::instance()->get('queue.app.handler_driver', '');
-        // 迭代获取所有消费回调
-        $queueList = [];
-        $dir_iterator = new RecursiveDirectoryIterator($this->consumers_path, RecursiveDirectoryIterator::SKIP_DOTS | RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
-        $iterator = new RecursiveIteratorIterator($dir_iterator);
-        /** @var RecursiveDirectoryIterator $iterator */
-        foreach ($iterator as $file) {
-            if ($file->getExtension() === 'php') {
-                // 获取对象名称
-                $dirname = dirname(str_replace($this->consumers_path, '', $file->getPathname()));
-                $beforName = str_replace(DIRECTORY_SEPARATOR, '\\', $dirname);
-                $beforNamespace = ($beforName == '\\' || $beforName == '.') ? '' : ('\\' . $beforName);
-                $className = $this->namespance . $beforNamespace . '\\' . $file->getBasename('.php');
-                if (!is_subclass_of($className, ConsumerInterface::class)) {
-                    continue;
+        // 获取所有消息队列
+        $queueList = QueueService::getQueue();
+        // 注册消息队列
+        foreach ($queueList as $key => $queue) {
+            /** @var ConsumerInterface $consumer */
+            $consumer = Container::instance()->get($queue['handler']);
+            // 注册队列池
+            $this->pool[$key] = [
+                // 链接db
+                'connection'        => $queue['connection'],
+                // 队列名
+                'queue'             => $queue['queue'],
+                // 描述信息
+                'describe'          => $queue['describe'],
+                // 成功数
+                'success'           => 0,
+                // 失败数
+                'failure'           => 0,
+                // 最近运行时间
+                'last_running_time' => '',
+                // 启动时间
+                'create_time'       => date('Y-m-d H:i:s', time()),
+                // 消费者实例
+                'consumer'          => $consumer
+            ];
+
+            // 创建队列客户端
+            $queueClient = QueueService::connection($queue['connection']);
+            // 消费失败时回调
+            $queueClient->onConsumeFailure(function (Exception $exeption, array $package) use ($handlerDriver) {
+                // 任务表示
+                $key = $this->getKey($package['connect'], $package['queue']);
+                // 记录执行信息
+                $this->pool[$key]['failure']++;
+                $this->pool[$key]['last_running_time'] = $package['consume_time'] ?? date('Y-m-d H:i:s', time());
+
+                // 执行回调，记录日志
+                if ($handlerDriver && is_subclass_of($handlerDriver, DriverInterface::class)) {
+                    $handler = Container::instance()->get($handlerDriver);
+                    call_user_func([$handler, 'handeler'], $package, false, $exeption->getMessage());
                 }
-                /** @var ConsumerInterface $consumer */
-                $consumer = Container::instance()->get($className);
-                $connection = $consumer->connection();
-                $queue = $consumer->queue();
-                if (!isset($queueList[$connection])) {
-                    $queueList[$connection] = [];
+
+                // 执行队列回调
+                $consumer = $this->pool[$key]['consumer'];
+                if (method_exists($consumer, 'onConsumeFailure')) {
+                    return call_user_func([$consumer, 'onConsumeFailure'], $exeption, $package);
                 }
-                // 检查队列是否重复，一个连接下不能订阅相同的队列
-                if (in_array($queue, $queueList[$connection])) {
-                    throw new RuntimeException("queue {$queue} is duplicated");
+            });
+            // 消费成功回调
+            $queueClient->onConsumeSuccess(function ($result, array $package) use ($handlerDriver) {
+                // 任务表示
+                $key = $this->getKey($package['connect'], $package['queue']);
+
+                // 记录执行信息
+                $this->pool[$key]['success']++;
+                $this->pool[$key]['last_running_time'] = $package['consume_time'] ?? date('Y-m-d H:i:s', time());
+
+                // 执行回调，记录日志
+                if ($handlerDriver && is_subclass_of($handlerDriver, DriverInterface::class)) {
+                    $handler = Container::instance()->get($handlerDriver);
+                    call_user_func([$handler, 'handeler'], $package, true, 'ok');
                 }
-                $queueList[$connection][] = $queue;
-                $queueClient = QueueService::connection($connection);
-                // 绑定日志服务
-                $queueClient->logger(Logger::instance()->channel());
-                // 监听队列
-                $queueClient->subscribe($queue, [$consumer, 'consume']);
-                // 消费失败时回调
-                $queueClient->onConsumeFailure(function (Exception $exeption, array $package) use ($consumer, $handlerDriver, $connection, $queue) {
-                    // 记录执行信息
-                    $key = $this->getKey($connection, $queue);
-                    $this->pool[$key]['failure']++;
-                    $this->pool[$key]['last_running_time'] = $package['consume_time'] ?? date('Y-m-d H:i:s', time());
 
-                    // 执行回调，记录日志
-                    if ($handlerDriver && is_subclass_of($handlerDriver, DriverInterface::class)) {
-                        $handler = Container::instance()->get($handlerDriver);
-                        call_user_func([$handler, 'handeler'], $connection, $queue, false, $exeption->getMessage(), $package);
-                    }
-
-                    // 执行队列回调
-                    if (method_exists($consumer, 'onConsumeFailure')) {
-                        return call_user_func([$consumer, 'onConsumeFailure'], $exeption, $package);
-                    }
-                });
-                // 消费成功回调
-                $queueClient->onConsumeSuccess(function ($result, array $package) use ($consumer, $handlerDriver, $connection, $queue) {
-                    // 记录执行信息
-                    $key = $this->getKey($connection, $queue);
-                    $this->pool[$key]['success']++;
-                    $this->pool[$key]['last_running_time'] = $package['consume_time'] ?? date('Y-m-d H:i:s', time());
-
-                    // 执行回调，记录日志
-                    if ($handlerDriver && is_subclass_of($handlerDriver, DriverInterface::class)) {
-                        $handler = Container::instance()->get($handlerDriver);
-                        call_user_func([$handler, 'handeler'], $connection, $queue, true, 'ok', $package);
-                    }
-
-                    // 执行回调
-                    if (method_exists($consumer, 'onConsumeSuccess')) {
-                        return call_user_func([$consumer, 'onConsumeSuccess'], $result, $package);
-                    }
-                });
-                // 注册任务池
-                $key = $this->getKey($connection, $queue);
-                $this->pool[$key] = [
-                    // 链接db
-                    'connection' => $connection,
-                    // 队列名
-                    'queue' => $queue,
-                    // 描述信息
-                    'describe' => $consumer->describe(),
-                    // 成功数
-                    'success' => 0,
-                    // 失败数
-                    'failure' => 0,
-                    // 最近运行时间
-                    'last_running_time' => '',
-                    // 启动时间
-                    'create_time' => date('Y-m-d H:i:s', time()),
-                ];
-                Logger::instance()->channel()->info('init queue subscribe => ' . $queue);
-            }
+                // 执行回调
+                $consumer = $this->pool[$key]['consumer'];
+                if (method_exists($consumer, 'onConsumeSuccess')) {
+                    return call_user_func([$consumer, 'onConsumeSuccess'], $result, $package);
+                }
+            });
+            // 监听队列
+            $queueClient->subscribe($queue['queue'], [$consumer, 'consume']);
+            // 记录启动监听日志
+            Logger::instance()->channel()->info('init queue subscribe => ' . $key);
         }
     }
 
