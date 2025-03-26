@@ -9,9 +9,15 @@
 */
 return [
     // 消费者进程存放目录路径
-    'consumers_path'    => ROOT_PATH . DIRECTORY_SEPARATOR . 'support' . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR,
+    'consumers_path'    => SUPPORT_PATH . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR,
     // 命名空间
     'namespace'         => '\\support\queue\consumers',
+    // 回调处理驱动，空则不处理
+    'handler_driver'    => gaia\queue\driver\Mysql::class,
+    // 日志表表名，驱动为mysql时有效
+    'log_table'         => 'queue_log',
+    // 日志时间格式，空则为时间戳，驱动为mysql时有效
+    'log_time_format'   => 'Y-m-d H:i:s',
     // 消息队列进程 Queue 配置
     'process'           => [
         // 监听协议端口，采用text协议，方便通信
@@ -62,7 +68,7 @@ return [
                 // 配置信息
                 'config'    => [
                     // 是否自动写入文件
-                    'save'      => false,
+                    'save'      => true,
                     // 写入文件后，清除缓存日志
                     'clear'     => true,
                     // 日志名称，空则使用当前日期作为名称       

@@ -27,6 +27,13 @@ interface ConsumerInterface
     public function queue(): string;
 
     /**
+     * 队列描述信息
+     *
+     * @return string
+     */
+    public function describe(): string;
+
+    /**
      * 处理函数
      *
      * @param mixed $data

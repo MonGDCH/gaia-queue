@@ -6,7 +6,7 @@ declare(strict_types=1);
 use gaia\App;
 use gaia\Gaia;
 use support\Plugin;
-use support\queue\QueueProcess;
+use support\queue\process\Queue as QueueProcess;
 
 /**
  * queue 应用启动入口

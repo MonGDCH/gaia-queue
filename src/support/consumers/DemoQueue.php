@@ -40,6 +40,16 @@ class DemoQueue implements ConsumerInterface
     }
 
     /**
+     * 队列描述信息
+     *
+     * @return string
+     */
+    public function describe(): string
+    {
+        return '演示队列';
+    }
+
+    /**
      * 处理函数
      *
      * @param mixed $data   队列参数
@@ -48,6 +58,7 @@ class DemoQueue implements ConsumerInterface
     public function consume($data)
     {
         dd($data);
+        return $this->queue() . ' success!';
     }
 
     /**
@@ -63,16 +74,16 @@ class DemoQueue implements ConsumerInterface
     }
 
     /**
-     * 消费失败触发的回调(可选)，支持更改内部数据结构$package的值，只需要将更改后的$data return 即可。
+     * 消费失败触发的回调(可选)，支持更改内部数据结构$package的值，只需要将更改后的$package return 即可。
      *
-     * @param Throwable $e  错误实例
-     * @param mixed $data   消息参数
+     * @param Throwable $e      错误实例
+     * @param mixed $package    消息参数
      * @return mixed
      */
-    public function onConsumeFailure(Throwable $e, $data)
+    public function onConsumeFailure(Throwable $e, $package)
     {
-        echo "队列 " . $data['queue'] . " 消费失败\n";
+        echo "队列 " . $package['queue'] . " 消费失败\n";
         echo $e->getMessage(), "\n";
-        dd($data);
+        dd($package);
     }
 }

@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace support\queue\consumers;
 
 use Throwable;
-use mon\env\Config;
-use mon\log\Logger;
 use mon\util\Network;
 use mon\util\Instance;
 use support\queue\QueueService;
@@ -43,6 +41,16 @@ class HttpQueue implements ConsumerInterface
     }
 
     /**
+     * 队列描述信息
+     *
+     * @return string
+     */
+    public function describe(): string
+    {
+        return '异步发送HTTP请求队列';
+    }
+
+    /**
      * 处理函数
      *
      * @param mixed $data
@@ -50,17 +58,14 @@ class HttpQueue implements ConsumerInterface
      */
     public function consume($data)
     {
-        $log_channel = Config::instance()->get('queue.app.log.channel', 'queue');
-        Logger::instance()->channel($log_channel)->log('start', 'http queue runing');
         if (!is_array($data)) {
-            Logger::instance()->channel($log_channel)->error('http queue data error');
-            return false;
+            return '未发起请求：队列调用传参格式错误';
         }
         $queryConfig = array_merge([
             // 请求的URl
             'url'       => '',
             // 请求方式
-            'method'    => 'get',
+            'method'    => 'GET',
             // 请求数据
             'data'      => [],
             // 请求头
@@ -69,29 +74,18 @@ class HttpQueue implements ConsumerInterface
             'agent'     => '',
             // 响应超时时间
             'timeout'   => 10,
-            // 是否保持响应结果集，1保存，其他不保存
-            'saveRet'   => 1,
         ], $data);
         if (empty($queryConfig['url'])) {
-            Logger::instance()->channel($log_channel)->error('http queue query url is empty');
-            return false;
+            return '未发起请求：请求地址URL不能为空';
         }
 
         try {
-            Logger::instance()->channel($log_channel)->info('http queue query url: ' . $queryConfig['url'] . ' method: ' . $queryConfig['method']);
-            Logger::instance()->channel($log_channel)->info('http queue query data: ' . json_encode($queryConfig['data'], JSON_UNESCAPED_UNICODE));
-            Logger::instance()->channel($log_channel)->info('http queue query header: ' . json_encode($queryConfig['header'], JSON_UNESCAPED_UNICODE));
-            Logger::instance()->channel($log_channel)->info('http queue query agent: ' . $queryConfig['agent']);
             $ret = Network::instance()->sendHTTP($queryConfig['url'], $queryConfig['data'],  $queryConfig['method'], $queryConfig['header'], false, $queryConfig['timeout'], $queryConfig['agent']);
-            if ($queryConfig['saveRet'] == 1) {
-                Logger::instance()->channel($log_channel)->info('http queue query result: ' . var_export($ret, true));
-            }
-
-            Logger::instance()->channel($log_channel)->log('end', 'http queue runing end', ['save' => true]);
-            return true;
+            return $ret;
         } catch (Throwable $e) {
-            Logger::instance()->channel($log_channel)->error('http queue query error: ' . $e->getMessage(), ['save' => true]);
-            return false;
+            return '请求失败：' . $e->getMessage();
+            // // 抛出异常，触发重试机制
+            // throw $e;
         }
     }
 
@@ -123,4 +117,13 @@ class HttpQueue implements ConsumerInterface
 
         return QueueService::syncSend($this->queue(), $queueData, $delay, $this->connection());
     }
+
+    /**
+     * 消费成功触发的回调(可选)
+     *
+     * @param mixed $result     响应结果
+     * @param mixed $package    消息参数
+     * @return mixed
+     */
+    public function onConsumeSuccess($result, $package) {}
 }

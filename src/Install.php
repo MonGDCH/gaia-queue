@@ -35,7 +35,8 @@ class Install
      */
     protected static $dir_relation = [
         'config'    => 'config/queue',
-        'support'   => 'support/queue'
+        'support'   => 'support/queue',
+        'command'   => 'support/command/queue'
     ];
 
     /**
@@ -63,9 +64,7 @@ class Install
      *
      * @return void
      */
-    public static function uninstall()
-    {
-    }
+    public static function uninstall() {}
 
     /**
      * Gaia发布

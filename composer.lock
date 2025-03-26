@@ -4,15 +4,96 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f3e1eb46dd887c295a324ddba5ad9c5",
+    "content-hash": "f547f3933e21c6fcdcf5e16d23d08d88",
     "packages": [
         {
-            "name": "mongdch/mon-util",
-            "version": "1.5.10",
+            "name": "mongdch/mon-env",
+            "version": "1.1.2",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.tencent.com/repository/composer/mongdch/mon-util/1.5.10/mongdch-mon-util-1.5.10.zip",
-                "reference": "3e5ee40172544229c0d596ee39f9148198c097e8",
+                "url": "https://mirrors.tencent.com/repository/composer/mongdch/mon-env/1.1.2/mongdch-mon-env-1.1.2.zip",
+                "reference": "0aa7e2a48f5738048b222015e6f82593d850964f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "mon\\env\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MonGDCH",
+                    "email": "985558837@qq.com"
+                }
+            ],
+            "description": "The php env config utils.",
+            "keywords": [
+                "config",
+                "env"
+            ],
+            "support": {
+                "issues": "https://github.com/MonGDCH/mon-env/issues",
+                "source": "https://github.com/MonGDCH/mon-env/tree/1.1.2"
+            },
+            "time": "2023-11-23T09:03:29+00:00"
+        },
+        {
+            "name": "mongdch/mon-log",
+            "version": "1.0.5",
+            "dist": {
+                "type": "zip",
+                "url": "https://mirrors.tencent.com/repository/composer/mongdch/mon-log/1.0.5/mongdch-mon-log-1.0.5.zip",
+                "reference": "93d3be10ccddce69602e7df103db163427454aaa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0",
+                "psr/log": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "mon\\log\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mon",
+                    "email": "985558837@qq.com",
+                    "homepage": "http://www.gdmon.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "The Logger Utils for PSR-3.",
+            "homepage": "http://gdmon.com/",
+            "keywords": [
+                "log",
+                "logger",
+                "psr-3"
+            ],
+            "support": {
+                "issues": "https://github.com/MonGDCH/mon-log/issues",
+                "source": "https://github.com/MonGDCH/mon-log/tree/1.0.5"
+            },
+            "time": "2023-05-23T06:12:58+00:00"
+        },
+        {
+            "name": "mongdch/mon-util",
+            "version": "1.5.14",
+            "dist": {
+                "type": "zip",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/mongdch/mon-util/1.5.14/mongdch-mon-util-1.5.14.zip",
+                "reference": "bfb0d70953bd012dcb7c2f76a7dde3cfc59bde3d",
                 "shasum": ""
             },
             "require": {
@@ -46,14 +127,18 @@
                 "tool",
                 "util"
             ],
-            "time": "2024-12-11T06:39:28+00:00"
+            "support": {
+                "issues": "https://github.com/MonGDCH/mon-util/issues",
+                "source": "https://github.com/MonGDCH/mon-util/tree/1.5.14"
+            },
+            "time": "2025-02-27T06:49:21+00:00"
         },
         {
             "name": "psr/container",
             "version": "1.0.0",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.tencent.com/repository/composer/psr/container/1.0.0/psr-container-1.0.0.zip",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/psr/container/1.0.0/psr-container-1.0.0.zip",
                 "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
                 "shasum": ""
             },
@@ -89,14 +174,62 @@
                 "container-interop",
                 "psr"
             ],
+            "support": {
+                "issues": "https://github.com/php-fig/container/issues",
+                "source": "https://github.com/php-fig/container/tree/master"
+            },
             "time": "2017-02-14T16:28:37+00:00"
+        },
+        {
+            "name": "psr/log",
+            "version": "1.1.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://mirrors.tencent.com/repository/composer/psr/log/1.1.4/psr-log-1.1.4.zip",
+                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/log/tree/1.1.4"
+            },
+            "time": "2021-05-03T11:20:27+00:00"
         },
         {
             "name": "workerman/redis",
             "version": "v2.0.3",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.tencent.com/repository/composer/workerman/redis/v2.0.3/workerman-redis-v2.0.3.zip",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/workerman/redis/v2.0.3/workerman-redis-v2.0.3.zip",
                 "reference": "4e910d4b0c2f2101a1f8dbd28be79fd864f7aab8",
                 "shasum": ""
             },
@@ -114,15 +247,19 @@
                 "MIT"
             ],
             "homepage": "http://www.workerman.net",
+            "support": {
+                "issues": "https://github.com/walkor/redis/issues",
+                "source": "https://github.com/walkor/redis/tree/v2.0.3"
+            },
             "time": "2024-08-01T03:38:26+00:00"
         },
         {
             "name": "workerman/redis-queue",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.tencent.com/repository/composer/workerman/redis-queue/v1.2.0/workerman-redis-queue-v1.2.0.zip",
-                "reference": "7b6aee70d69e5c9427c0411d85f8398027831b42",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/workerman/redis-queue/v1.2.1/workerman-redis-queue-v1.2.1.zip",
+                "reference": "75dbf7ed2ea228c45dc0df82c0fea35879b715d0",
                 "shasum": ""
             },
             "require": {
@@ -141,14 +278,18 @@
             ],
             "description": "Message queue system written in PHP based on workerman and backed by Redis.",
             "homepage": "http://www.workerman.net",
-            "time": "2024-02-28T07:00:03+00:00"
+            "support": {
+                "issues": "https://github.com/walkor/redis-queue/issues",
+                "source": "https://github.com/walkor/redis-queue/tree/v1.2.1"
+            },
+            "time": "2025-01-02T09:21:45+00:00"
         },
         {
             "name": "workerman/workerman",
             "version": "v4.1.17",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.tencent.com/repository/composer/workerman/workerman/v4.1.17/workerman-workerman-v4.1.17.zip",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/workerman/workerman/v4.1.17/workerman-workerman-v4.1.17.zip",
                 "reference": "bb9e4b0c3fc3931a2ae38a1fb7a3ac09246efae9",
                 "shasum": ""
             },
@@ -181,6 +322,13 @@
                 "asynchronous",
                 "event-loop"
             ],
+            "support": {
+                "email": "walkor@workerman.net",
+                "forum": "http://wenda.workerman.net/",
+                "issues": "https://github.com/walkor/workerman/issues",
+                "source": "https://github.com/walkor/workerman",
+                "wiki": "http://doc.workerman.net/"
+            },
             "time": "2024-11-07T07:48:34+00:00"
         }
     ],

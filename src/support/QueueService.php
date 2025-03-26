@@ -7,7 +7,7 @@ namespace support\queue;
 use mon\env\Config;
 use mon\util\Network;
 use RuntimeException;
-use Workerman\RedisQueue\Client;
+use gaia\queue\QueueClient;
 use support\service\RedisService;
 
 /**
@@ -29,9 +29,9 @@ class QueueService
      * 连接队列
      *
      * @param string $name  队列配置名
-     * @return Client
+     * @return QueueClient
      */
-    public static function connection(string $name = ''): Client
+    public static function connection(string $name = '')
     {
         $name = $name ?: Config::instance()->get('queue.queue.default', 'default');
         if (!isset(static::$_connections[$name])) {
@@ -47,7 +47,7 @@ class QueueService
                 'max_attempts' => $config['max_attempts'],
                 'retry_seconds' => $config['retry_seconds']
             ];
-            $client = new Client($address, $options);
+            $client = new QueueClient($address, $options);
             static::$_connections[$name] = $client;
         }
 
@@ -94,9 +94,9 @@ class QueueService
         $config = static::getQueueConfig($connection, $ping);
         // 发送
         if ($delay) {
-            $send = RedisService::instance()->tryExecCommand($config, 'zAdd', Client::QUEUE_DELAYED, $now + $delay, $package);
+            $send = RedisService::instance()->tryExecCommand($config, 'zAdd', QueueClient::QUEUE_DELAYED, $now + $delay, $package);
         } else {
-            $send = RedisService::instance()->tryExecCommand($config, 'lPush', Client::QUEUE_WAITING . $queue, $package);
+            $send = RedisService::instance()->tryExecCommand($config, 'lPush', QueueClient::QUEUE_WAITING . $queue, $package);
         }
 
         return boolval($send);
@@ -134,5 +134,23 @@ class QueueService
         $config['ping'] = $ping;
 
         return $config;
+    }
+
+    /**
+     * 获取当前正在运行的任务
+     *
+     * @throws \Throwable    服务进程链接失败抛出异常
+     * @return array
+     */
+    public static function getPool(): array
+    {
+        $cammad = json_encode(['fn' => 'getPool', 'data' => []], JSON_UNESCAPED_UNICODE);
+        $ret = static::communication($cammad);
+        $data = json_decode($ret, true);
+        if (!$data || $data['code'] != '1') {
+            return ['code' => -1, 'msg' => '服务进程链接失败'];
+        }
+
+        return $data;
     }
 }

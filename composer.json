@@ -19,7 +19,9 @@
     "require": {
         "php": ">=7.2.0",
         "workerman/redis-queue": "^1.1",
-        "mongdch/mon-util": "^1.5"
+        "mongdch/mon-util": "^1.5",
+        "mongdch/mon-env": "^1.1",
+        "mongdch/mon-log": "^1.0"
     },
     "autoload": {
         "psr-4": {
