@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS `queue_log` (
   `connection` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '链接名称',
   `queue` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '队列名称',
   `send_time` datetime NOT NULL COMMENT '投递时间',
+  `send_data` varchar(2000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '投递数据',
   `run_time` datetime NOT NULL COMMENT '执行任务时间',
   `running_time` float unsigned NOT NULL COMMENT '执行所用时间',
   `status` tinyint(1) unsigned NOT NULL COMMENT '执行返回状态: 0-失败 1-成功',

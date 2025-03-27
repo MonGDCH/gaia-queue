@@ -38,6 +38,9 @@ class Logger implements DriverInterface
         $send_time = date('Y-m-d H:i:s', $package['time']);
         // 投递数据
         $send_data = is_array($package['data']) ? json_encode($package['data'], JSON_UNESCAPED_UNICODE) : $package['data'];
+        // 获取结果
+        $result = $this->getResult($result);
+        // 记录日志
         $log = "[{$package['connect']}] [{$package['queue']}] [{$send_time}] {$send_data} [{$run_time}] {$result} [runing_time: {$running_time}]";
         if ($status) {
             LogLogger::instance()->channel()->info($log);
@@ -46,5 +49,23 @@ class Logger implements DriverInterface
         }
 
         return true;
+    }
+
+    /**
+     * 获取消费结果
+     *
+     * @param mixed $result
+     * @return string
+     */
+    protected function getResult($result): string
+    {
+        if (is_string($result)) {
+            return $result;
+        }
+        if (is_array($result)) {
+            return json_encode($result, JSON_UNESCAPED_UNICODE);
+        }
+
+        return '';
     }
 }

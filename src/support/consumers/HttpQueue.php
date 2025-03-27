@@ -81,7 +81,10 @@ class HttpQueue implements ConsumerInterface
 
         try {
             $ret = Network::instance()->sendHTTP($queryConfig['url'], $queryConfig['data'],  $queryConfig['method'], $queryConfig['header'], false, $queryConfig['timeout'], $queryConfig['agent']);
-            return $ret;
+            if (isset($data['saveRet']) && $data['saveRet'] == 1) {
+                return $ret;
+            }
+            return '请求成功';
         } catch (Throwable $e) {
             return '请求失败：' . $e->getMessage();
             // // 抛出异常，触发重试机制
@@ -117,13 +120,4 @@ class HttpQueue implements ConsumerInterface
 
         return QueueService::syncSend($this->queue(), $queueData, $delay, $this->connection());
     }
-
-    /**
-     * 消费成功触发的回调(可选)
-     *
-     * @param mixed $result     响应结果
-     * @param mixed $package    消息参数
-     * @return mixed
-     */
-    public function onConsumeSuccess($result, $package) {}
 }

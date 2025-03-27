@@ -57,7 +57,7 @@ class DemoQueue implements ConsumerInterface
      */
     public function consume($data)
     {
-        dd($data);
+        echo "投递消息 " . json_encode($data, JSON_UNESCAPED_UNICODE) . "\n";
         return $this->queue() . ' success!';
     }
 
@@ -77,13 +77,25 @@ class DemoQueue implements ConsumerInterface
      * 消费失败触发的回调(可选)，支持更改内部数据结构$package的值，只需要将更改后的$package return 即可。
      *
      * @param Throwable $e      错误实例
-     * @param mixed $package    消息参数
+     * @param array $package    消息参数
      * @return mixed
      */
-    public function onConsumeFailure(Throwable $e, $package)
+    public function onConsumeFailure(Throwable $e, array $package)
     {
         echo "队列 " . $package['queue'] . " 消费失败\n";
         echo $e->getMessage(), "\n";
-        dd($package);
+    }
+
+    /**
+     * 消费成功触发的回调(可选)
+     *
+     * @param mixed $result     响应结果
+     * @param mixed $package    消息参数
+     * @return void
+     */
+    public function onConsumeSuccess($result, array $package)
+    {
+        echo "队列：" . $package['queue'] . " 消费成功\n";
+        echo "结果：" . $result . "\n";
     }
 }

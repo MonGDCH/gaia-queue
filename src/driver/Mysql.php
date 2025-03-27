@@ -25,10 +25,10 @@ class Mysql implements DriverInterface
      * @param string $queue         队列标识
      * @param boolean $status       消费状态，true成功，false失败
      * @param string $result        消费结果
-     * @param array $package        消费数据包
+     * @param mixed $package        消费数据包
      * @return void
      */
-    public function handeler(array $package, bool $status, string $result = '')
+    public function handeler(array $package, bool $status, $result = '')
     {
         // 运行时间
         $nowMsec = microtime(true);
@@ -50,7 +50,7 @@ class Mysql implements DriverInterface
             'run_time'      => $run_time,
             'running_time'  => $running_time,
             'status'        => $status,
-            'result'        => $result,
+            'result'        => $this->getResult($result),
             'create_time'   => $this->getTime()
         ]);
         if (!$save) {
@@ -59,6 +59,24 @@ class Mysql implements DriverInterface
         }
 
         return true;
+    }
+
+    /**
+     * 获取消费结果
+     *
+     * @param mixed $result
+     * @return string
+     */
+    protected function getResult($result): string
+    {
+        if (is_string($result)) {
+            return $result;
+        }
+        if (is_array($result)) {
+            return json_encode($result, JSON_UNESCAPED_UNICODE);
+        }
+
+        return '';
     }
 
     /**

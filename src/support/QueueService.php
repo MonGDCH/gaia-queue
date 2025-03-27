@@ -11,6 +11,7 @@ use mon\util\Container;
 use gaia\queue\QueueClient;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
+use support\queue\process\Queue;
 use support\service\RedisService;
 use gaia\queue\ConsumerInterface;
 
@@ -66,8 +67,8 @@ class QueueService
      */
     public static function communication(string $messgae = 'ping'): string
     {
-        $host = QueueProcess::getListenHost();
-        $port = QueueProcess::getListenPort();
+        $host = Queue::getListenHost();
+        $port = Queue::getListenPort();
         $result = Network::instance()->sendTCP($host, $port, $messgae . "\n", false);
         return trim((string)$result['result']);
     }
@@ -153,10 +154,10 @@ class QueueService
         $ret = static::communication($cammad);
         $data = json_decode($ret, true);
         if (!$data || $data['code'] != '1') {
-            return ['code' => -1, 'msg' => '服务进程链接失败'];
+            throw new RuntimeException('获取运行中的任务失败：' . $data['msg']);
         }
 
-        return $data;
+        return $data['data'];
     }
 
     /**

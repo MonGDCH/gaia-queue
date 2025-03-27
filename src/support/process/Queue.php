@@ -136,7 +136,7 @@ class Queue implements ProcessInterface
                 // 执行回调，记录日志
                 if ($handlerDriver && is_subclass_of($handlerDriver, DriverInterface::class)) {
                     $handler = Container::instance()->get($handlerDriver);
-                    call_user_func([$handler, 'handeler'], $package, true, 'ok');
+                    call_user_func([$handler, 'handeler'], $package, true, $result);
                 }
 
                 // 执行回调
