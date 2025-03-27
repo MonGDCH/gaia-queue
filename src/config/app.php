@@ -13,7 +13,7 @@ return [
     // 命名空间
     'namespace'         => '\\support\queue\consumers',
     // 回调处理驱动，空则不处理
-    'handler_driver'    => gaia\queue\driver\Mysql::class,
+    'handler_driver'    => gaia\queue\driver\Logger::class,
     // 日志表表名，驱动为mysql时有效
     'log_table'         => 'queue_log',
     // 日志时间格式，空则为时间戳，驱动为mysql时有效
