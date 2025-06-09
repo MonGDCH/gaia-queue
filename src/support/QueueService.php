@@ -69,7 +69,7 @@ class QueueService
     {
         $host = Queue::getListenHost();
         $port = Queue::getListenPort();
-        $result = Network::instance()->sendTCP($host, $port, $messgae . "\n", false);
+        $result = Network::sendTCP($host, $port, $messgae . "\n", false);
         return trim((string)$result['result']);
     }
 

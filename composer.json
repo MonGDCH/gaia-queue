@@ -2,7 +2,7 @@
     "name": "mongdch/gaia-queue",
     "description": "The Gaia Framework queue process.",
     "license": "MIT",
-    "homepage": "http://gdmon.com/",
+    "homepage": "https://github.com/MonGDCH",
     "keywords": [
         "gaia",
         "workerman",
@@ -12,7 +12,7 @@
         {
             "name": "Mon",
             "email": "985558837@qq.com",
-            "homepage": "http://www.gdmon.com/",
+            "homepage": "https://github.com/MonGDCH",
             "role": "Developer"
         }
     ],

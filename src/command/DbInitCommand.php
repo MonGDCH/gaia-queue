@@ -50,7 +50,7 @@ class DbInitCommand extends Command
     public function execute(Input $in, Output $out)
     {
         $sqlFile = __DIR__ . '/sql/queue.sql';
-        $sqls = Sql::instance()->parseFile($sqlFile);
+        $sqls = Sql::parseFile($sqlFile);
         // 建表
         Db::setConfig(Config::instance()->get('database', []));
         foreach ($sqls as $sql) {

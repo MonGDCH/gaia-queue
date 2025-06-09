@@ -11,7 +11,7 @@
             "version": "1.1.2",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.tencent.com/repository/composer/mongdch/mon-env/1.1.2/mongdch-mon-env-1.1.2.zip",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/mongdch/mon-env/1.1.2/mongdch-mon-env-1.1.2.zip",
                 "reference": "0aa7e2a48f5738048b222015e6f82593d850964f",
                 "shasum": ""
             },
@@ -49,7 +49,7 @@
             "version": "1.0.5",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.tencent.com/repository/composer/mongdch/mon-log/1.0.5/mongdch-mon-log-1.0.5.zip",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/mongdch/mon-log/1.0.5/mongdch-mon-log-1.0.5.zip",
                 "reference": "93d3be10ccddce69602e7df103db163427454aaa",
                 "shasum": ""
             },
@@ -89,16 +89,16 @@
         },
         {
             "name": "mongdch/mon-util",
-            "version": "1.5.14",
+            "version": "1.6.0",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/mongdch/mon-util/1.5.14/mongdch-mon-util-1.5.14.zip",
-                "reference": "bfb0d70953bd012dcb7c2f76a7dde3cfc59bde3d",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/mongdch/mon-util/1.6.0/mongdch-mon-util-1.6.0.zip",
+                "reference": "1428cd338df7fb1c8203cd2a855560e87b260c14",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.0",
-                "psr/container": "1.0.0"
+                "psr/container": "^2.0.0"
             },
             "type": "library",
             "autoload": {
@@ -116,12 +116,12 @@
                 {
                     "name": "Mon",
                     "email": "985558837@qq.com",
-                    "homepage": "http://www.gdmon.com/",
+                    "homepage": "https://github.com/MonGDCH",
                     "role": "Developer"
                 }
             ],
             "description": "常用的PHP工具类库，包含了各种各式各样的工具，如：容器、时间、验证器、多语言、图片处理、二维码生成、IP地址解析、文件操作、数据安全、数据字典等等等等。。。",
-            "homepage": "http://gdmon.com/",
+            "homepage": "https://github.com/MonGDCH",
             "keywords": [
                 "mon",
                 "tool",
@@ -129,26 +129,26 @@
             ],
             "support": {
                 "issues": "https://github.com/MonGDCH/mon-util/issues",
-                "source": "https://github.com/MonGDCH/mon-util/tree/1.5.14"
+                "source": "https://github.com/MonGDCH/mon-util/tree/1.6.0"
             },
-            "time": "2025-02-27T06:49:21+00:00"
+            "time": "2025-06-09T03:54:33+00:00"
         },
         {
             "name": "psr/container",
-            "version": "1.0.0",
+            "version": "2.0.2",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/psr/container/1.0.0/psr-container-1.0.0.zip",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "url": "https://mirrors.tencent.com/repository/composer/psr/container/2.0.2/psr-container-2.0.2.zip",
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=7.4.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -162,7 +162,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
+                    "homepage": "https://www.php-fig.org/"
                 }
             ],
             "description": "Common Container Interface (PHP FIG PSR-11)",
@@ -176,9 +176,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/master"
+                "source": "https://github.com/php-fig/container/tree/2.0.2"
             },
-            "time": "2017-02-14T16:28:37+00:00"
+            "time": "2021-11-05T16:47:00+00:00"
         },
         {
             "name": "psr/log",
@@ -226,11 +226,11 @@
         },
         {
             "name": "workerman/redis",
-            "version": "v2.0.3",
+            "version": "v2.0.5",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/workerman/redis/v2.0.3/workerman-redis-v2.0.3.zip",
-                "reference": "4e910d4b0c2f2101a1f8dbd28be79fd864f7aab8",
+                "url": "https://mirrors.tencent.com/repository/composer/workerman/redis/v2.0.5/workerman-redis-v2.0.5.zip",
+                "reference": "49627c1809eff1ef7175eb8ee7549234a1d67ec5",
                 "shasum": ""
             },
             "require": {
@@ -249,9 +249,9 @@
             "homepage": "http://www.workerman.net",
             "support": {
                 "issues": "https://github.com/walkor/redis/issues",
-                "source": "https://github.com/walkor/redis/tree/v2.0.3"
+                "source": "https://github.com/walkor/redis/tree/v2.0.5"
             },
-            "time": "2024-08-01T03:38:26+00:00"
+            "time": "2025-04-07T01:58:58+00:00"
         },
         {
             "name": "workerman/redis-queue",
@@ -289,7 +289,7 @@
             "version": "v4.1.17",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/workerman/workerman/v4.1.17/workerman-workerman-v4.1.17.zip",
+                "url": "https://mirrors.tencent.com/repository/composer/workerman/workerman/v4.1.17/workerman-workerman-v4.1.17.zip",
                 "reference": "bb9e4b0c3fc3931a2ae38a1fb7a3ac09246efae9",
                 "shasum": ""
             },
@@ -335,12 +335,12 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.2.0"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

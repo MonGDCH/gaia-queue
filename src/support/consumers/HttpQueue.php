@@ -80,7 +80,7 @@ class HttpQueue implements ConsumerInterface
         }
 
         try {
-            $ret = Network::instance()->sendHTTP($queryConfig['url'], $queryConfig['data'],  $queryConfig['method'], $queryConfig['header'], false, $queryConfig['timeout'], $queryConfig['agent']);
+            $ret = Network::sendHTTP($queryConfig['url'], $queryConfig['data'],  $queryConfig['method'], $queryConfig['header'], false, $queryConfig['timeout'], $queryConfig['agent']);
             if (isset($data['saveRet']) && $data['saveRet'] == 1) {
                 return $ret;
             }
