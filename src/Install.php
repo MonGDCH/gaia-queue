@@ -25,7 +25,7 @@ class Install
      * @var array
      */
     protected static $file_relation = [
-        'queue.php' => 'bin/queue.php',
+        'install/queue.php' => 'bin/queue.php',
     ];
 
     /**
@@ -34,9 +34,8 @@ class Install
      * @var array
      */
     protected static $dir_relation = [
-        'config'    => 'config/queue',
-        'support'   => 'support/queue',
-        'command'   => 'support/command/queue'
+        'install/config'    => 'config/queue',
+        'install/support'   => 'support/queue',
     ];
 
     /**

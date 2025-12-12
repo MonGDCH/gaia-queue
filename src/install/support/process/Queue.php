@@ -59,7 +59,7 @@ class Queue implements ProcessInterface
      * @param Worker $worker worker进程
      * @return void
      */
-    public function onWorkerStart(Worker $worker): void
+    public function onWorkerStart(Worker $worker)
     {
         // 注册日志服务
         $channel = Config::instance()->get('queue.app.log.channel', 'queue');
