@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f547f3933e21c6fcdcf5e16d23d08d88",
+    "content-hash": "e7fb52435da88a484414ea523cfb6ecd",
     "packages": [
         {
             "name": "mongdch/mon-env",
             "version": "1.1.2",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/mongdch/mon-env/1.1.2/mongdch-mon-env-1.1.2.zip",
+                "url": "https://mirrors.tencent.com/repository/composer/mongdch/mon-env/1.1.2/mongdch-mon-env-1.1.2.zip",
                 "reference": "0aa7e2a48f5738048b222015e6f82593d850964f",
                 "shasum": ""
             },
@@ -46,16 +46,16 @@
         },
         {
             "name": "mongdch/mon-log",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/mongdch/mon-log/1.0.5/mongdch-mon-log-1.0.5.zip",
-                "reference": "93d3be10ccddce69602e7df103db163427454aaa",
+                "url": "https://mirrors.tencent.com/repository/composer/mongdch/mon-log/1.0.6/mongdch-mon-log-1.0.6.zip",
+                "reference": "8188d3cb8b41730e5510c26b7507bf4666e80930",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.0.0",
-                "psr/log": "^1.1"
+                "psr/log": ">=1.1"
             },
             "type": "library",
             "autoload": {
@@ -83,17 +83,17 @@
             ],
             "support": {
                 "issues": "https://github.com/MonGDCH/mon-log/issues",
-                "source": "https://github.com/MonGDCH/mon-log/tree/1.0.5"
+                "source": "https://github.com/MonGDCH/mon-log/tree/1.0.6"
             },
-            "time": "2023-05-23T06:12:58+00:00"
+            "time": "2025-06-14T09:39:31+00:00"
         },
         {
             "name": "mongdch/mon-util",
-            "version": "1.6.0",
+            "version": "1.6.5",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/mongdch/mon-util/1.6.0/mongdch-mon-util-1.6.0.zip",
-                "reference": "1428cd338df7fb1c8203cd2a855560e87b260c14",
+                "url": "https://mirrors.tencent.com/repository/composer/mongdch/mon-util/1.6.5/mongdch-mon-util-1.6.5.zip",
+                "reference": "397aa96c06bf1c9ff4092855d8dedfcd89e99837",
                 "shasum": ""
             },
             "require": {
@@ -129,9 +129,9 @@
             ],
             "support": {
                 "issues": "https://github.com/MonGDCH/mon-util/issues",
-                "source": "https://github.com/MonGDCH/mon-util/tree/1.6.0"
+                "source": "https://github.com/MonGDCH/mon-util/tree/1.6.5"
             },
-            "time": "2025-06-09T03:54:33+00:00"
+            "time": "2025-12-09T08:41:32+00:00"
         },
         {
             "name": "psr/container",
@@ -182,25 +182,25 @@
         },
         {
             "name": "psr/log",
-            "version": "1.1.4",
+            "version": "3.0.2",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.tencent.com/repository/composer/psr/log/1.1.4/psr-log-1.1.4.zip",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
+                "url": "https://mirrors.tencent.com/repository/composer/psr/log/3.0.2/psr-log-3.0.2.zip",
+                "reference": "f16e1d5863e37f8d8c2a01719f5b34baa2b714d3",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=8.0.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "3.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Psr\\Log\\": "Psr/Log/"
+                    "Psr\\Log\\": "src"
                 }
             },
             "license": [
@@ -220,9 +220,42 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/1.1.4"
+                "source": "https://github.com/php-fig/log/tree/3.0.2"
             },
-            "time": "2021-05-03T11:20:27+00:00"
+            "time": "2024-09-11T13:17:53+00:00"
+        },
+        {
+            "name": "workerman/coroutine",
+            "version": "v1.1.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://mirrors.tencent.com/repository/composer/workerman/coroutine/v1.1.4/workerman-coroutine-v1.1.4.zip",
+                "reference": "b0bebfa9d41b992ad0a835ddf2ee8fa5d58eca44",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^11.0",
+                "psr/log": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Workerman\\": "src",
+                    "Workerman\\Coroutine\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Workerman coroutine",
+            "support": {
+                "issues": "https://github.com/workerman-php/coroutine/issues",
+                "source": "https://github.com/workerman-php/coroutine/tree/v1.1.4"
+            },
+            "time": "2025-10-11T15:09:08+00:00"
         },
         {
             "name": "workerman/redis",
@@ -258,7 +291,7 @@
             "version": "v1.2.1",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/workerman/redis-queue/v1.2.1/workerman-redis-queue-v1.2.1.zip",
+                "url": "https://mirrors.tencent.com/repository/composer/workerman/redis-queue/v1.2.1/workerman-redis-queue-v1.2.1.zip",
                 "reference": "75dbf7ed2ea228c45dc0df82c0fea35879b715d0",
                 "shasum": ""
             },
@@ -286,15 +319,26 @@
         },
         {
             "name": "workerman/workerman",
-            "version": "v4.1.17",
+            "version": "v5.1.6",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.tencent.com/repository/composer/workerman/workerman/v4.1.17/workerman-workerman-v4.1.17.zip",
-                "reference": "bb9e4b0c3fc3931a2ae38a1fb7a3ac09246efae9",
+                "url": "https://mirrors.tencent.com/repository/composer/workerman/workerman/v5.1.6/workerman-workerman-v5.1.6.zip",
+                "reference": "9b83bdf9fd0eaff9419a240b47da870447583112",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0"
+                "ext-json": "*",
+                "php": ">=8.1",
+                "workerman/coroutine": "^1.1 || dev-main"
+            },
+            "conflict": {
+                "ext-swow": "<v1.0.0"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^7.0",
+                "mockery/mockery": "2.0.x-dev",
+                "pestphp/pest": "2.x-dev",
+                "phpstan/phpstan": "2.1.x-dev"
             },
             "suggest": {
                 "ext-event": "For better performance. "
@@ -302,7 +346,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Workerman\\": "./"
+                    "Workerman\\": "src"
                 }
             },
             "license": [
@@ -312,30 +356,36 @@
                 {
                     "name": "walkor",
                     "email": "walkor@workerman.net",
-                    "homepage": "http://www.workerman.net",
+                    "homepage": "https://www.workerman.net",
                     "role": "Developer"
                 }
             ],
             "description": "An asynchronous event driven PHP framework for easily building fast, scalable network applications.",
-            "homepage": "http://www.workerman.net",
+            "homepage": "https://www.workerman.net",
             "keywords": [
                 "asynchronous",
-                "event-loop"
+                "event-loop",
+                "framework",
+                "http"
             ],
             "support": {
                 "email": "walkor@workerman.net",
-                "forum": "http://wenda.workerman.net/",
+                "forum": "https://www.workerman.net/questions",
                 "issues": "https://github.com/walkor/workerman/issues",
                 "source": "https://github.com/walkor/workerman",
-                "wiki": "http://doc.workerman.net/"
+                "wiki": "https://www.workerman.net/doc/workerman/"
             },
-            "time": "2024-11-07T07:48:34+00:00"
+            "time": "2025-11-12T01:36:20+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "mongdch/mon-env": 20,
+        "mongdch/mon-log": 20,
+        "mongdch/mon-util": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
