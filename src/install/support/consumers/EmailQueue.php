@@ -9,9 +9,9 @@ use Throwable;
 use mon\util\View;
 use mon\util\Instance;
 use InvalidArgumentException;
+use app\service\MailerService;
 use support\queue\QueueService;
 use gaia\queue\ConsumerInterface;
-use support\service\MailerService;
 
 /**
  * 发送邮件消息队列

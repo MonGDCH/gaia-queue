@@ -9,10 +9,10 @@ use mon\util\Network;
 use RuntimeException;
 use mon\util\Container;
 use gaia\queue\QueueClient;
+use app\service\RedisService;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use support\queue\process\Queue;
-use support\service\RedisService;
 use gaia\queue\ConsumerInterface;
 
 /**
@@ -70,7 +70,7 @@ class QueueService
         $host = Queue::getListenHost();
         $port = Queue::getListenPort();
         $result = Network::sendTCP($host, $port, $messgae . "\n", false);
-        return trim((string)$result['result']);
+        return trim((string)$result);
     }
 
     /**

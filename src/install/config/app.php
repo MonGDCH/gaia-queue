@@ -15,17 +15,17 @@ return [
     // 回调处理驱动，空则不处理
     'handler_driver'    => gaia\queue\driver\Logger::class,
     // 日志表表名，驱动为mysql时有效
-    'log_table'         => 'queue_log',
+    'log_table'         => env('QUEUE_LOG_TABLE', 'queue_log'),
     // 日志时间格式，空则为时间戳，驱动为mysql时有效
-    'log_time_format'   => 'Y-m-d H:i:s',
+    'log_time_format'   => env('QUEUE_LOG_TIME_FORMAT', 'Y-m-d H:i:s'),
     // 消息队列进程 Queue 配置
     'process'           => [
         // 监听协议端口，采用text协议，方便通信
-        'listen'        => 'text://127.0.0.1:7123',
+        'listen'        => 'text://127.0.0.1:' . env('QUEUE_SERVER_PORT', 7123),
         // 额外参数
         'context'       => [],
         // 进程数
-        'count'         => \gaia\App::cpuCount(),
+        'count'         => env('QUEUE_SERVER_COUNT', \gaia\App::cpuCount()),
         // 通信协议，一般不需要修改
         'transport'     => 'tcp',
         // 进程用户
@@ -37,7 +37,7 @@ return [
         // 是否允许进程重载
         'reloadable'    => true,
     ],
-    // 日志配置
+    // \gaia\queue\driver\Logger 文件日志配置
     'log'           => [
         // 日志通道名
         'channel'   => 'queue',
