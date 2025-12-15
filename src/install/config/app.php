@@ -9,9 +9,9 @@
 */
 return [
     // 消费者进程存放目录路径
-    'consumers_path'    => SUPPORT_PATH . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR,
+    'consumers_path'    => APP_PATH . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR,
     // 命名空间
-    'namespace'         => '\\support\queue\consumers',
+    'namespace'         => '\\app\queue',
     // 回调处理驱动，空则不处理
     'handler_driver'    => gaia\queue\driver\Logger::class,
     // 日志表表名，驱动为mysql时有效

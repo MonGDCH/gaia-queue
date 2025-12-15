@@ -12,7 +12,6 @@ use Workerman\Worker;
 use gaia\ProcessTrait;
 use mon\util\Container;
 use support\queue\QueueService;
-use support\cache\CacheService;
 use gaia\queue\DriverInterface;
 use gaia\queue\ConsumerInterface;
 use gaia\interfaces\ProcessInterface;
@@ -68,10 +67,7 @@ class Queue implements ProcessInterface
 
         // 定义数据库配置，自动识别是否已安装ORM库
         if (class_exists(ORM::class)) {
-            $dbConfig = Config::instance()->get('database', []);
-            // 注册ORM
-            $cache_store = class_exists(CacheService::class) ? CacheService::instance()->getService()->store() : null;
-            ORM::register(false, $dbConfig, Logger::instance()->channel(), $cache_store);
+            ORM::register(true);
         }
 
         // 回调处理器驱动

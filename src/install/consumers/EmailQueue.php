@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace support\queue\consumers;
+namespace app\queue;
 
 use Exception;
 use Throwable;

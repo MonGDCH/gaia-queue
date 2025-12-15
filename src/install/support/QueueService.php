@@ -170,10 +170,10 @@ class QueueService
         // 获取所有消息队列
         $queueList = [];
         // 消费者回调控制器目录
-        $detault = SUPPORT_PATH . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR . 'consumers' . DIRECTORY_SEPARATOR;
+        $detault = APP_PATH . DIRECTORY_SEPARATOR . 'queue' . DIRECTORY_SEPARATOR;
         $consumers_path = Config::instance()->get('queue.app.consumers_path', $detault);
         // 消费者回调控制器命名空间
-        $namespance = Config::instance()->get('queue.app.namespace', '\\support\queue\consumers');
+        $namespance = Config::instance()->get('queue.app.namespace', '\\app\queue');
         $dir_iterator = new RecursiveDirectoryIterator($consumers_path, RecursiveDirectoryIterator::SKIP_DOTS | RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
         $iterator = new RecursiveIteratorIterator($dir_iterator);
         /** @var RecursiveDirectoryIterator $iterator */

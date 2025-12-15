@@ -171,7 +171,7 @@ class QueueClient extends Client
      * @param string $level 日志等级
      * @return void
      */
-    protected function log($log, string $level = 'error'): void
+    protected function log($log, string $level = 'error')
     {
         \call_user_func([Logger::instance()->channel(), $level], $log);
     }

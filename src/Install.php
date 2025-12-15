@@ -36,6 +36,7 @@ class Install
     protected static $dir_relation = [
         'install/config'    => 'config/queue',
         'install/support'   => 'support/queue',
+        'install/consumers' => 'app/queue',
     ];
 
     /**

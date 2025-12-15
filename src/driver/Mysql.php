@@ -24,7 +24,7 @@ class Mysql implements DriverInterface
      * @param string $connection    连接标识
      * @param string $queue         队列标识
      * @param boolean $status       消费状态，true成功，false失败
-     * @param string $result        消费结果
+     * @param string|array $result  消费结果
      * @param mixed $package        消费数据包
      * @return void
      */
